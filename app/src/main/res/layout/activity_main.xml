@@ -25,6 +25,7 @@
         app:itemIconTint="@color/darkred"
         app:itemTextColor="@color/darkred"
         app:itemTextAppearance="@color/darkred"/>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
