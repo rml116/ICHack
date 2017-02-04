@@ -1,8 +1,10 @@
 package com.example.radu.ichack;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,14 +25,6 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
-      }
-    });
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,6 +50,8 @@ public class MainActivity extends AppCompatActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.main, menu);
+
+
     return true;
   }
 
@@ -66,11 +62,6 @@ public class MainActivity extends AppCompatActivity
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
     return super.onOptionsItemSelected(item);
   }
 
@@ -80,17 +71,41 @@ public class MainActivity extends AppCompatActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
-    } else if (id == R.id.nav_gallery) {
+    if (id == R.id.nav_my_day) {
 
-    } else if (id == R.id.nav_slideshow) {
+    } else if (id == R.id.nav_calendar) {
 
-    } else if (id == R.id.nav_manage) {
+    } else if (id == R.id.nav_progress) {
 
-    } else if (id == R.id.nav_share) {
+    } else if (id == R.id.nav_habits) {
+      TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+      tabLayout.addTab(tabLayout.newTab().setText("Habits"));
+      tabLayout.addTab(tabLayout.newTab().setText("Tasks"));
+      tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-    } else if (id == R.id.nav_send) {
+      final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+      final PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
+      viewPager.setAdapter(adapter);
+      viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+      tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+          viewPager.setCurrentItem(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+      });
+
+    } else if (id == R.id.nav_daily_tasks) {
 
     }
 
