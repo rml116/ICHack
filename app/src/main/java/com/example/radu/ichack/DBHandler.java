@@ -20,6 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "habitsAndTasksInfo";
   private static final String TABLE_HABITS = "habits";
   private static final String TABLE_TASKS = "tasks";
+  private static final String TABLE_DAY = "day";
   private static final String KEY_HABIT_ID = "habitId";
   private static final String KEY_HABIT_NAME = "habitName";
   private static final String KEY_HABIT_REPEAT = "habitRepeat";
@@ -33,6 +34,8 @@ public class DBHandler extends SQLiteOpenHelper {
   private static final String KEY_TASK_TIMESTAMP_D = "taskTimestampD";
   private static final String KEY_TASK_TIMESTAMP_H = "taskTimestampH";
   private static final String KEY_TASK_TIMESTAMP_MIN = "taskTimestampMin";
+  private static final String KEY_DAY_ID = "dayId";
+  private static final String KEY_DAY_TIMESTAMP_D = "dayTimestampD";
 
   public DBHandler(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,12 +55,19 @@ public class DBHandler extends SQLiteOpenHelper {
         KEY_TASK_TIMESTAMP_D + " INT," + KEY_TASK_TIMESTAMP_H + " INT," +
         KEY_TASK_TIMESTAMP_MIN + " INT" + ")";
     db.execSQL(CREATE_TASKS_TABLE);
+
+    String CREATE_DAY_TABLE = "CREATE TABLE " + TABLE_DAY + "(" +
+        KEY_DAY_ID + " INTEGER PRIMARY KEY," + KEY_DAY_TIMESTAMP_D +
+        " INT" + ")";
+    db.execSQL(CREATE_DAY_TABLE);
+
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_HABITS);
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
+    //db.execSQL("");
     onCreate(db);
   }
 
