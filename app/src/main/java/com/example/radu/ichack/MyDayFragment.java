@@ -1,5 +1,6 @@
 package com.example.radu.ichack;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * Created by radu on 04.02.2017.
@@ -43,7 +46,6 @@ public class MyDayFragment extends Fragment {
 
       }
     });
-
 
     return view;
   }

@@ -25,6 +25,7 @@ public class DBHandler extends SQLiteOpenHelper {
   private static final String KEY_HABIT_REPEAT = "habitRepeat";
   private static final String KEY_HABIT_TIMESTAMP_H = "habitTimestampH";
   private static final String KEY_HABIT_TIMESTAMP_M = "habitTimestampM";
+  private static final String KEY_HABIT_DONE = "habitDone";
   private static final String KEY_TASK_ID = "taskId";
   private static final String KEY_TASK_NAME = "taskName";
   private static final String KEY_TASK_TIMESTAMP_Y = "taskTimestampY";
@@ -42,7 +43,7 @@ public class DBHandler extends SQLiteOpenHelper {
     String CREATE_HABITS_TABLE = "CREATE TABLE " + TABLE_HABITS + "(" +
         KEY_HABIT_ID + " INTEGER PRIMARY KEY," + KEY_HABIT_NAME + " TEXT," +
         KEY_HABIT_REPEAT + " INT," + KEY_HABIT_TIMESTAMP_H + " INT," +
-        KEY_HABIT_TIMESTAMP_M + " INT" + ")";
+        KEY_HABIT_TIMESTAMP_M + " INT," + KEY_HABIT_DONE + " INT" + ")";
     db.execSQL(CREATE_HABITS_TABLE);
 
     String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "(" +
@@ -67,6 +68,7 @@ public class DBHandler extends SQLiteOpenHelper {
     values.put(KEY_HABIT_REPEAT, habit.getRepeatWeek());
     values.put(KEY_HABIT_TIMESTAMP_H, habit.getTimestampH());
     values.put(KEY_HABIT_TIMESTAMP_M, habit.getTimestampM());
+    values.put(KEY_HABIT_DONE, (habit.isDone() ? 1 : 0));
     db.insert(TABLE_HABITS, null, values);
     db.close();
   }
@@ -91,7 +93,8 @@ public class DBHandler extends SQLiteOpenHelper {
                       KEY_HABIT_NAME,
                       KEY_HABIT_REPEAT,
                       KEY_HABIT_TIMESTAMP_H,
-                      KEY_HABIT_TIMESTAMP_M},
+                      KEY_HABIT_TIMESTAMP_M,
+                      KEY_HABIT_DONE},
         KEY_HABIT_ID + "=?",
         new String[] {String.valueOf(id)},
         null, null, null, null);
@@ -102,7 +105,8 @@ public class DBHandler extends SQLiteOpenHelper {
                                 cursor.getString(1),
                                 Integer.parseInt(cursor.getString(2)),
                                 Integer.parseInt(cursor.getString(3)),
-                                Integer.parseInt(cursor.getString(4)));
+                                Integer.parseInt(cursor.getString(4)),
+                                (Integer.parseInt(cursor.getString(5)) == 1 ? true : false));
 
         return Optional.of(habit);
       } else {
@@ -158,7 +162,8 @@ public class DBHandler extends SQLiteOpenHelper {
                                 cursor.getString(1),
                                 Integer.parseInt(cursor.getString(2)),
                                 Integer.parseInt(cursor.getString(3)),
-                                Integer.parseInt(cursor.getString(4)));
+                                Integer.parseInt(cursor.getString(4)),
+                                (Integer.parseInt(cursor.getString(5)) == 1 ? true : false));
         habits.add(habit);
       } while (cursor.moveToNext());
     }
@@ -207,6 +212,7 @@ public class DBHandler extends SQLiteOpenHelper {
     values.put(KEY_HABIT_REPEAT, habit.getRepeatWeek());
     values.put(KEY_HABIT_TIMESTAMP_H, habit.getTimestampH());
     values.put(KEY_HABIT_TIMESTAMP_M, habit.getTimestampM());
+    values.put(KEY_HABIT_DONE, (habit.isDone() ? 1 : 0));
 
     return db.update(TABLE_HABITS, values, KEY_HABIT_ID + " = ?",
                      new String[] {String.valueOf(habit.getId())});
