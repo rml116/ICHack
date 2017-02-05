@@ -1,5 +1,7 @@
 package com.example.radu.ichack;
 
+import android.app.FragmentManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +42,22 @@ public class MainActivity extends AppCompatActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    final DBHandler db = new DBHandler(getBaseContext());
+
+    fab.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View view) {
+        FragmentManager fm = getFragmentManager();
+        MyDialogFragment dialogFragment = new MyDialogFragment();
+
+        dialogFragment.show(fm, "Sample Fragment");
+
+      }
+    });
+
   }
 
   @Override
