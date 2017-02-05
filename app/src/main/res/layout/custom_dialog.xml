@@ -22,16 +22,6 @@
         android:id="@+id/editText1"
         android:layout_gravity="center"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="How often?"
-        android:textColorHint="@color/darkred"
-        android:textAlignment="center"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/dismiss"

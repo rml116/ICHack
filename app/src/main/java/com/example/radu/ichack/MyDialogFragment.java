@@ -21,7 +21,6 @@ public class MyDialogFragment extends DialogFragment {
     getDialog().setTitle("New Habit");
 
     final EditText et1 = (EditText)rootView.findViewById(R.id.editText1);
-    final EditText et2 = (EditText)rootView.findViewById(R.id.editText2);
 
     Button save = (Button)rootView.findViewById(R.id.dismiss);
 
@@ -29,8 +28,7 @@ public class MyDialogFragment extends DialogFragment {
       @Override
       public void onClick(View view) {
         String habit = et1.getText().toString();
-        int howOften = Integer.parseInt(et2.getText().toString());
-        Habit habit1 = new Habit(1, habit, howOften, 1, 3, false);
+        Habit habit1 = new Habit(1, habit, 0, 1, 3, false);
         db.addHabit(habit1);
         getDialog().dismiss();
       }

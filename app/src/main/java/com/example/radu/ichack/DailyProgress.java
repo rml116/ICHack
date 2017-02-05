@@ -16,8 +16,13 @@ public class DailyProgress extends Fragment {
     View view = inflater.inflate(R.layout.daily_progress, container, false);
 
     DBHandler dbHandler = new DBHandler(getContext());
+    int progress;
 
-    int progress = dbHandler.getHabitsDoneCount() * 100 / dbHandler.getHabitsCount();
+    if (dbHandler.getHabitsCount() == 0) {
+      progress = 0;
+    } else {
+      progress = dbHandler.getHabitsDoneCount() * 100 / dbHandler.getHabitsCount();
+    }
 
     mWaveLoadingView = (WaveLoadingView) view.findViewById(R.id.waveLoadingView);
 

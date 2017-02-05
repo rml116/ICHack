@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ICHack"
+        android:text="Habit-o"
         android:textColor="@color/darkred"
         android:typeface="sans"
         android:textStyle="bold"
