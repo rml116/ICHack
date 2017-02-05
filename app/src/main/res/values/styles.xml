@@ -5,10 +5,10 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/darkred</item>
         <item name="colorPrimaryDark">@color/lightred</item>
-        <item name="colorAccent">@color/darkred</item>
+        <item name="colorAccent">@color/lightred</item>
         <item name="android:textSize">18sp</item>
         <item name="android:actionMenuTextAppearance">@color/darkred</item>
-        <item name="android:textColor">@color/darkred</item>
+        <item name="android:textColor">@color/lightred</item>
 
     </style>
     <style name="MyActionBarTitleText"

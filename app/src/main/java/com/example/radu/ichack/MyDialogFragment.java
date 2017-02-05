@@ -30,7 +30,7 @@ public class MyDialogFragment extends DialogFragment {
       public void onClick(View view) {
         String habit = et1.getText().toString();
         int howOften = Integer.parseInt(et2.getText().toString());
-        Habit habit1 = new Habit(1, habit, howOften, 1, 3, true);
+        Habit habit1 = new Habit(1, habit, howOften, 1, 3, false);
         db.addHabit(habit1);
         getDialog().dismiss();
       }

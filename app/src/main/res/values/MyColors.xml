@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkred">#80140c</color>
-    <color name="lightred">#fbd656</color>
+    <color name="darkred">#CDDC39</color>
+    <color name="lightred">#00796B</color>
 </resources>

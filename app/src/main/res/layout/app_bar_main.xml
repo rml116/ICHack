@@ -33,7 +33,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/plus"
-        android:tint="@color/lightred"/>
+        android:tint="@color/darkred"/>
 
 
     </android.support.design.widget.CoordinatorLayout>

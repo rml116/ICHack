@@ -30,6 +30,7 @@ public class MyDayFragment extends Fragment {
 
     tabLayout.addTab(tabLayout.newTab().setText("Habits"));
     tabLayout.addTab(tabLayout.newTab().setText("Tasks"));
+    tabLayout.addTab(tabLayout.newTab().setText("Daily Progress"));
     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
     final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);

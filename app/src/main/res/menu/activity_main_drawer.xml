@@ -11,18 +11,6 @@
             android:icon="@drawable/calendar_icon"
             android:title="Calendar"
             />
-        <item
-            android:id="@+id/nav_progress"
-            android:icon="@drawable/progress_icon"
-            android:title="Progress"/>
-        <item
-            android:id="@+id/nav_habits"
-            android:icon="@drawable/habits_icon"
-            android:title="Habits"/>
-        <item
-            android:id="@+id/nav_daily_tasks"
-            android:icon="@drawable/tasks_icon"
-            android:title="Daily Tasks"/>
     </group>
 
 </menu>

@@ -252,6 +252,14 @@ public class DBHandler extends SQLiteOpenHelper {
     return cursor.getCount();
   }
 
+  public int getHabitsDoneCount() {
+    String countQuery = "SELECT * FROM " + TABLE_HABITS + " WHERE " + KEY_HABIT_DONE + "= 1";
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(countQuery, null);
+
+    return cursor.getCount();
+  }
+
   public int getTasksCount() {
     String countQuery = "SELECT * FROM " + TABLE_TASKS;
     SQLiteDatabase db = this.getReadableDatabase();
@@ -337,4 +345,6 @@ public class DBHandler extends SQLiteOpenHelper {
               new String[] {String.valueOf(task.getId())});
     db.close();
   }
+
+
 }

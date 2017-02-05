@@ -15,13 +15,15 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if(position == 0) {
+        if (position == 0) {
             HabitFragment habits = new HabitFragment();
             return habits;
-        }
-        else {
+        } else if (position == 1) {
             TaskFragment tasks = new TaskFragment();
             return tasks;
+        } else {
+            DailyProgress dailyProgress = new DailyProgress();
+            return dailyProgress;
         }
     }
 
