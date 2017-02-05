@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Path;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class DBHandler extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_HABITS);
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
-    //db.execSQL("");
+    db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY);
     onCreate(db);
   }
 
@@ -96,6 +97,14 @@ public class DBHandler extends SQLiteOpenHelper {
     db.close();
   }
 
+  public void addDay(int day) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put(KEY_DAY_TIMESTAMP_D, day);
+    db.insert(TABLE_DAY, null, values);
+    db.close();
+  }
+
   public Optional<Habit> getHabit(int id) {
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.query(TABLE_HABITS,
@@ -119,8 +128,6 @@ public class DBHandler extends SQLiteOpenHelper {
                                 (Integer.parseInt(cursor.getString(5)) == 1 ? true : false));
 
         return Optional.of(habit);
-      } else {
-        return Optional.empty();
       }
     }
 
@@ -152,8 +159,26 @@ public class DBHandler extends SQLiteOpenHelper {
                              Integer.parseInt(cursor.getString(6)));
 
         return Optional.of(task);
-      } else {
-        return Optional.empty();
+      }
+    }
+
+    return Optional.empty();
+  }
+
+  public Optional<Integer> getDay(int id) {
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.query(TABLE_DAY,
+        new String[] {KEY_DAY_ID,
+                      KEY_DAY_TIMESTAMP_D},
+        KEY_DAY_ID + "=?",
+        new String[] {String.valueOf(id)},
+        null, null, null, null);
+
+    if (cursor != null) {
+      if (cursor.moveToFirst()) {
+        int day = Integer.parseInt(cursor.getString(1));
+
+        return Optional.of(day);
       }
     }
 
@@ -203,8 +228,40 @@ public class DBHandler extends SQLiteOpenHelper {
     return tasks;
   }
 
+  public List<Integer> getAllDays() {
+    List<Integer> days = new ArrayList<>();
+    String selectQuery = "SELECT * FROM " + TABLE_DAY;
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null);
+
+    if (cursor.moveToFirst()) {
+      do {
+        int day = Integer.parseInt(cursor.getString(1));
+        days.add(day);
+      } while (cursor.moveToNext());
+    }
+
+    return days;
+  }
+
   public int getHabitsCount() {
     String countQuery = "SELECT * FROM " + TABLE_HABITS;
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(countQuery, null);
+
+    return cursor.getCount();
+  }
+
+  public int getTasksCount() {
+    String countQuery = "SELECT * FROM " + TABLE_TASKS;
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(countQuery, null);
+
+    return cursor.getCount();
+  }
+
+  public int getDaysCount() {
+    String countQuery = "SELECT * FROM " + TABLE_DAY;
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.rawQuery(countQuery, null);
 
@@ -244,6 +301,19 @@ public class DBHandler extends SQLiteOpenHelper {
 
     return db.update(TABLE_TASKS, values, KEY_TASK_ID + " = ?",
                      new String[] {String.valueOf(task.getId())});
+  }
+
+  public int updateDay(int day) {
+    if (!getDay(1).isPresent()) {
+      return -1;
+    }
+
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put(KEY_DAY_TIMESTAMP_D, day);
+
+    return db.update(TABLE_DAY, values, KEY_DAY_ID + " = ?",
+                     new String[] {String.valueOf(1)});
   }
 
   public void deleteHabit(Habit habit) {

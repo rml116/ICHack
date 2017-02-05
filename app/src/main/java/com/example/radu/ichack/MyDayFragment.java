@@ -1,5 +1,6 @@
 package com.example.radu.ichack;
 
+import android.icu.util.Calendar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,14 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 /**
  * Created by radu on 04.02.2017.
  */
 
 public class MyDayFragment extends Fragment {
+  private DBHandler db;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view =  inflater.inflate(R.layout.myday_adapter, container, false);
+    db = new DBHandler(getActivity().getBaseContext());
     TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
 
     tabLayout.addTab(tabLayout.newTab().setText("Habits"));
@@ -48,5 +54,25 @@ public class MyDayFragment extends Fragment {
     });
 
     return view;
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    Calendar c = Calendar.getInstance();
+    int day = c.get(Calendar.DAY_OF_MONTH);
+
+    if (!(db.getDay(1).isPresent())) {
+      db.addDay(day);
+    } else if (!(db.getAllDays().get(0) == day)){
+      db.updateDay(day);
+      List<Habit> habits = db.getAllHabits();
+
+      for (Habit habit : habits) {
+        habit.setDone(false);
+        db.updateHabit(habit);
+      }
+    }
   }
 }
